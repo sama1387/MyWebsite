@@ -36,6 +36,21 @@ a{
     color: #e58cb1;
 }
 
+img{
+    width: 300px;
+    height: 300px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px rgb(63, 63, 63);
+}
+.div{
+    display: flex;
+    flex-direction: column;
+}
+label{
+    text-align: center;
+}
+
+ 
 @media screen and (max-width: 200px) {
     body{
         background-color: aqua;
