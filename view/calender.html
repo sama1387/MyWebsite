@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<style>
+ body {
+  font-family: 'Vazir', sans-serif;
+  background: #f9f9f9;
+  direction: rtl;
+  text-align: center;
+}
+
+.calendar-container {
+  width: 400px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #ccc;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.weekdays, #calendarDays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.weekdays div {
+  font-weight: bold;
+  color: #555;
+}
+
+.day {
+  padding: 10px;
+  background: #e0e0e0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.day:hover {
+  background: #b0bec5;
+}
+
+.selected {
+  background: #1976d2;
+  color: white;
+}
+
+.time-slot {
+  margin: 10px;
+  padding: 6px 12px;
+  background: #4caf50;
+  color: white;
+  border-radius: 4px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.time-slot:hover {
+  background: #388e3c;
+}
+
+</style>
+
+<div class="calendar-container">
+    <div class="header">
+      <button id="prevMonth">◀</button>
+      <span id="monthYear"></span>
+      <button id="nextMonth">▶</button>
+    </div>
+    <div class="weekdays">
+      <div>شنبه</div><div>یک‌شنبه</div><div>دوشنبه</div><div>سه‌شنبه</div><div>چهارشنبه</div><div>پنج‌شنبه</div><div>جمعه</div>
+    </div>
+    <div id="calendarDays"></div>
+    <div id="times"></div>
+    <div id="confirmation"></div>
+  </div>
+
+
+  <script src="
+  https://cdn.jsdelivr.net/npm/jalaali-js@1.2.8/dist/jalaali.min.js
+  "></script>
+<script>
+let selectedDay = null;
+let currentDate = new Date();
+let currentJDate = jalaali.toJalaali(currentDate);
+
+function renderCalendar(jYear, jMonth) {
+  const monthYear = document.getElementById("monthYear");
+  const calendarDays = document.getElementById("calendarDays");
+  calendarDays.innerHTML = "";
+  document.getElementById("times").innerHTML = "";
+  document.getElementById("confirmation").innerHTML = "";
+
+  const monthNames = [
+    "فروردین", "اردیبهشت", "خرداد", "تیر",
+    "مرداد", "شهریور", "مهر", "آبان",
+    "آذر", "دی", "بهمن", "اسفند"
+  ];
+
+  monthYear.textContent = `${monthNames[jMonth - 1]} ${jYear}`;
+
+  const daysInMonth = jalaali.jalaaliMonthLength(jYear, jMonth);
+  const firstDayG = jalaali.toGregorian(jYear, jMonth, 1);
+  const firstDay = new Date(firstDayG.gy, firstDayG.gm - 1, firstDayG.gd).getDay();
+  const shift = (firstDay + 1) % 7; // شنبه = 0
+
+  for (let i = 0; i < shift; i++) {
+    calendarDays.innerHTML += `<div></div>`;
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dayDiv = document.createElement("div");
+    dayDiv.className = "day";
+    dayDiv.textContent = day;
+    dayDiv.onclick = () => selectDay(jYear, jMonth, day);
+    calendarDays.appendChild(dayDiv);
+  }
+}
+
+function selectDay(year, month, day) {
+  selectedDay = { year, month, day };
+  document.querySelectorAll(".day").forEach(d => d.classList.remove("selected"));
+  event.target.classList.add("selected");
+
+  const times = ["9:00", "10:00", "11:30", "13:00", "15:30"];
+  const timesDiv = document.getElementById("times");
+  timesDiv.innerHTML = "<h4>ساعات قابل رزرو:</h4>";
+  times.forEach(t => {
+    const el = document.createElement("div");
+    el.className = "time-slot";
+    el.textContent = t;
+    el.onclick = () => reserveTime(t);
+    timesDiv.appendChild(el);
+  });
+
+  document.getElementById("confirmation").innerHTML = "";
+}
+
+function reserveTime(time) {
+  const { year, month, day } = selectedDay;
+  document.getElementById("confirmation").innerHTML =
+    `<p>✅ رزرو شما برای ${day} ${month}/${year} در ساعت ${time} ثبت شد.</p>`;
+  document.getElementById("times").innerHTML = "";
+}
+
+document.getElementById("prevMonth").onclick = () => {
+  currentJDate.jm -= 1;
+  if (currentJDate.jm < 1) {
+    currentJDate.jm = 12;
+    currentJDate.jy -= 1;
+  }
+  renderCalendar(currentJDate.jy, currentJDate.jm);
+};
+
+document.getElementById("nextMonth").onclick = () => {
+  currentJDate.jm += 1;
+  if (currentJDate.jm > 12) {
+    currentJDate.jm = 1;
+    currentJDate.jy += 1;
+  }
+  renderCalendar(currentJDate.jy, currentJDate.jm);
+};
+
+renderCalendar(currentJDate.jy, currentJDate.jm);
+
+
+</script>
+
+</body>
+</html>
