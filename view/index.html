@@ -1,58 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/main.css">
-    <link rel="stylesheet" href="/styles/reset.css">
-    <title>hair texture</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="/styles/reset.css"/>
+  <link rel="stylesheet" href="/styles/main.css"/>
+  <title>Hair Texture</title>
 </head>
 <body>
-    <div>
-        <nav style="display: flex; justify-content:space-between; align-items: center;">
-            
-            <h1 style="color: #ECCEDA;font-size: 40px;margin: 10px;margin-left: 30px;text-shadow: 3px 3px 3px rgb(75, 73, 73);">hair texture</h1>
-            <ul class="menu">
-                <li class="menu-item">
-                    <a href="index.html" id="li">home</a>
-                </li>
-                <li class="menu-item">
 
-                    <a href="shop.html">shop</a>
-                </li>
-                <li class="menu-item">
+    <nav class="navbar">
+        <h1 class="logo">Hair Texture</h1>
+      
+        <!-- Hamburger Icon -->
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+      
+        <!-- Desktop Menu -->
+        <ul class="menu">
+          <li class="menu-item"><a href="index.html">Home</a></li>
+          <li class="menu-item"><a href="shop.html">Shop</a></li>
+          <li class="menu-item"><a href="about.html">About Us</a></li>
+          <li class="menu-item"><a href="contact.html">Contact Us</a></li>
+        </ul>
+      
+        <!-- Mobile Menu -->
+        <ul class="mobile-menu" id="mobileMenu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      
+        <select name="city" id="city" class="english">
+          <option value="english">English</option>
+          <option value="persian">فارسی</option>
+        </select>
+      </nav>
 
-                    <a href="about.html">about us</a>
-                </li>
-                <li class="menu-item">
+  <h1 class="page-title">Home</h1>
 
-                    <a href="cotact.html">contact us</a>
-                </li>
-            </ul>
-
-            <select name="city" id="city" class="english">
-                <option value="english">english</option>
-                <option value="persian">فارسی</option>
-            </select>
-        </nav>    
+  <div class="container">
+    <div class="content">
+      <p>Hair from you<br />style it with me</p>
+      <a href="login.html"><button class="button">Log In & Sign-Up</button></a>
+      <a href="types.html"><button class="button">Types</button></a>
     </div>
-    <h1 style="color: #ECCEDA;font-size: 40px;text-align: center; text-shadow: 2px 2px 2px rgb(75, 73, 73); padding: 3px;">home</h1>
-    <div class="container" style="display: flex;justify-content: space-around; align-items: center; position: relative; height: 92.3vh;" >
-        <div style="font-size: 54px;color: #FFFFFF; display: flex; flex-direction: column;">
-            <p>Hair from you <br>
-            style it with me</p>
-            <a href="login.html">
-                <button class="button"> log in & sing-up</button>
-            </a>
-            <a href="types.html">
-                <button class="button">types</button>
-            </a>
-        </div>
-        <div>
-            <img class="image" src="/assets/image/baft-moo8-removebg-preview.png" alt="error" style="width: 750px; height: 550px;opacity: 0.9;">
-        </div>
+    <div class="image-wrapper">
+      <img class="image" src="/assets/image/baft-moo8-removebg-preview.png" alt="Hair Style" />
     </div>
-
-
+  </div>
+  
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("mobileMenu");
+      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+    }
+  </script>
 </body>
 </html>
